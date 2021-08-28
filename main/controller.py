@@ -27,7 +27,12 @@ def search_all(list_of_filters={}):
 
     if list_of_filters is not {}:
         for key, value in list_of_filters.items():
-            df = df.loc[df[key].str.contains(value)]
+            if key in ['customer_rating']:
+                df = df.loc[df[key] >= int(value)]
+            elif key in ['price', 'distance']:
+                df = df.loc[df[key] <= int(value)]
+            else:
+                df = df.loc[df[key].str.contains(value)]
 
     print('Sorting ...')
     df = df.sort_values(by=['distance','customer_rating', 'price'], ascending=[True, False, True])
