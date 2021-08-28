@@ -13,5 +13,7 @@ def create_app(test_config=None):
     except OSError:
         pass
 
+    from . import resource
+    app.register_blueprint(resource.bp)
 
     return app
