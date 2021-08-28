@@ -1,5 +1,6 @@
 import logging
 import os
+import flask_cors
 
 from flask import Flask
 
@@ -13,6 +14,9 @@ def create_app(test_config=None):
         os.makedirs(app.instance_path)
     except OSError:
         pass
+
+    from flask_cors import CORS
+    cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 
     from . import resource
     app.register_blueprint(resource.bp)

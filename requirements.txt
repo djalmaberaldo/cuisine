@@ -1,3 +1,4 @@
 flask
 flask_expects_json
 pandas
+flask_cors

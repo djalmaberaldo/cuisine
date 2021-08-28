@@ -15,3 +15,5 @@ def search_all():
     df = pd.read_csv(file_to_search_restaurants, sep="\t")
     js = df.to_json(orient = 'records')
     return js
+
+
