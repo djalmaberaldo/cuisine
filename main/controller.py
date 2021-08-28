@@ -35,7 +35,10 @@ def search_all(list_of_filters={}):
                 df = df.loc[df[key].str.contains(value)]
 
     print('Sorting ...')
-    df = df.sort_values(by=['distance','customer_rating', 'price'], ascending=[True, False, True])
+    df = df.sort_values(
+        by=['distance','customer_rating', 'price', 'name_restaurant', 'name_cuisine'], 
+        ascending=[True, False, True, True, True]
+    )
 
     df = df.head(current_pagination)
     js = df.to_json(orient = 'records')
