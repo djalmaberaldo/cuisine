@@ -12,7 +12,8 @@ bp = Blueprint('resource', __name__, url_prefix='/resource')
 
 @bp.route("/search", endpoint='search', methods=['GET'])
 def search():
-    return controller.search_all()
+    restaurant_name = request.args.get('name')
+    return controller.search_all(restaurant_name)
 
 @bp.errorhandler(500)
 def internal_server_error():
