@@ -42,6 +42,6 @@ def search_all(list_of_filters={}):
 
     df = df.head(current_pagination)
     js = df.to_json(orient = 'records')
-    return js
+    return  json.loads(js)
 
 

@@ -25,7 +25,7 @@ def search():
                 "status": 403
             }
 
-    return controller.search_all(list_of_filters)
+    return json.dumps(controller.search_all(list_of_filters))
 
 @bp.errorhandler(500)
 def internal_server_error():
