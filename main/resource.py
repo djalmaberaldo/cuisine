@@ -13,7 +13,6 @@ bp = Blueprint('resource', __name__, url_prefix='/resource')
 @bp.route("/search", endpoint='search', methods=['GET'])
 def search():
     list_of_filters = request.args.to_dict()
-    print(list_of_filters)
     return controller.search_all(list_of_filters)
 
 @bp.errorhandler(500)
