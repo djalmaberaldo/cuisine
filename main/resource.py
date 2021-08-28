@@ -1,14 +1,18 @@
 
-from flask import Flask, Blueprint, request, jsonify, g, Response, render_template
-from flask_expects_json import expects_json
 import json
 import logging
+
+from flask import (Blueprint, Flask, Response, g, jsonify, render_template,
+                   request)
+from flask_expects_json import expects_json
+
+from . import controller
 
 bp = Blueprint('resource', __name__, url_prefix='/resource')
 
 @bp.route("/search", endpoint='search', methods=['GET'])
 def search():
-    return 'TEST WORKED';
+    return controller.search_all()
 
 @bp.errorhandler(500)
 def internal_server_error():

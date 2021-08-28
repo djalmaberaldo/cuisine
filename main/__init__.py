@@ -1,7 +1,8 @@
+import logging
 import os
 
 from flask import Flask
-import logging
+
 
 def create_app(test_config=None):
     # create and configure the app
@@ -15,5 +16,8 @@ def create_app(test_config=None):
 
     from . import resource
     app.register_blueprint(resource.bp)
+
+    from . import controller
+    app.register_blueprint(controller.bp)
 
     return app
