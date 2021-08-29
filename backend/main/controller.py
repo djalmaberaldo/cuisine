@@ -11,6 +11,8 @@ package_dir = os.path.dirname(os.path.realpath(__file__+'../'))
 file_to_search_restaurants =  os.path.join(package_dir,'../restaurants.csv')
 file_to_search_cuisines =  os.path.join(package_dir,'../cuisines.csv')
 
+logging.basicConfig(level=logging.INFO)
+
 current_pagination = 5
 
 def search_all(list_of_filters={}):
@@ -28,10 +30,10 @@ def build_dataframe():
     restaurantes_df = pd.read_csv(file_to_search_restaurants, index_col=False, sep=",")
     cuisines_df = pd.read_csv(file_to_search_cuisines, index_col=False, sep=",")
 
-    print('Merging dataframes...')
+    logging.info('Merging dataframes...')
     df = restaurantes_df.merge(cuisines_df, left_on='cuisine_id', right_on='id', suffixes=("_restaurant","_cuisine"))
 
-    print('Dropping columns..')
+    logging.info('Dropping columns..')
     df = df.drop(columns=["id", "cuisine_id"])
     return df
 
@@ -49,7 +51,7 @@ def apply_filters(data_frame, list_of_filters):
             
 
 def sort_dataframe(data_frame):
-    print('Sorting ...')
+    logging.info('Sorting ...')
     return data_frame.sort_values(
         by=['distance','customer_rating', 'price', 'name_restaurant', 'name_cuisine'], 
         ascending=[True, False, True, True, True]
