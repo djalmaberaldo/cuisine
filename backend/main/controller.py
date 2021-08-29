@@ -1,8 +1,7 @@
 import json
 import logging
 import os
-from flask import (Blueprint, Flask, Response, g, jsonify, render_template,
-                   request)
+from flask import (Blueprint, Flask, Response, jsonify, request)
 
 import pandas as pd
 
