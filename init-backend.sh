@@ -3,7 +3,7 @@ echo 'Setting up the environment'
 
 
 echo 'Backend first...'
-    
+chmod 777 -R .
 cd backend
 
 if [[ ! -d "venv" ]]
