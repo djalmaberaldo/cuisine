@@ -1,6 +1,5 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { BestMatchModule } from "./best-match.module";
 import { SearchPageComponent } from "./search-page/search-page.component";
 
 
