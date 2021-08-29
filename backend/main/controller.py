@@ -40,12 +40,14 @@ def build_dataframe():
 def apply_filters(data_frame, list_of_filters):
     if list_of_filters is not {}:
         for key, value in list_of_filters.items():
+            print(key)
             if key in ['customer_rating']:
                 data_frame = data_frame.loc[data_frame[key] >= int(value)]
             elif key in ['price', 'distance']:
                 data_frame = data_frame.loc[data_frame[key] <= int(value)]
             else:
-                data_frame = data_frame.loc[data_frame[key].str.contains(value)]
+                print('search here')
+                data_frame = data_frame.loc[data_frame[key].str.contains(value, case=False)]
     return data_frame
             
 
