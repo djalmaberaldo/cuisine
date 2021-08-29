@@ -3,41 +3,50 @@
   <div class="card-container">
     <div class="container-fluid w-100  p-4">
       <div class="container mt-5 w-100">
-          <div class="d-flex w-100 filters">
-              <div class="">
-                  <div class="form-group">
-                      <label for="search"><h4>Search:</h4></label>
-                      <input type="text" class="form-control" id="search"  placeholder="Search something">
-                  </div>
+          <form>
+            <div class="row">
+              <div class="col">
+                <label for="restaurant_name">Name</label>
+                <input type="text" id="restaurant_name" class="form-control" placeholder="Restaurant Name">
               </div>
-              <div class="ml-3">
-                  <div class="form-group">
-                      <h4>Filter by:</h4>
-                      <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="radio" name="filterBy"  >
-                      </div>
-                  </div>
+              <div class="col">
+                <label for="cuisine">Cuisine</label>
+                <input type="text" id="cuisine" class="form-control" placeholder="Cuisine">
               </div>
-          </div>
+              <div class="col">
+                <label for="rating">Rating</label>
+                <input type="number" id="rating" class="form-control" placeholder="Rating">
+              </div>
+              <div class="col">
+                <label for="distance">Distance</label>
+                <input type="number" id="distance" class="form-control" placeholder="Distance">
+              </div>
+              <div class="col">
+                <label for="price">Price</label>
+                <input type="number" id="Price" class="form-control" placeholder="Price">
+              </div>
+            </div>
+          </form>
           <div class="list-result" >
-              <div class="card" *ngFor="let restaurant of restaurants ">
-                <div class="card-header">
-                    <h6 class="card-title">{{restaurant.name_restaurant}}</h6>
+            <div class="card" *ngFor="let restaurant of restaurants ">
+              <div class="card-header">
+                  <h6 class="card-title">{{restaurant.name_restaurant}}</h6>
+              </div>
+              <div class="card-body d-flex">
+                <div>
+                    <p class="card-text"><b>Cuisine Type</b>: <span>{{restaurant.name_cuisine}}</span></p>
                 </div>
-                <div class="card-body d-flex">
-                  <div>
-                      <p class="card-text"><b>Cuisine Type</b>: <span>{{restaurant.name_cuisine}}</span></p>
-                  </div>
-                  <div>
-                      <p class="card-text"><b>Average Price</b>: <span> USD {{restaurant.price}}</span></p>
-                  </div>
-                  <div>
-                      <p class="card-text"><b>Customer Rating</b>: <span>{{restaurant.customer_rating}}</span></p>
-                  </div>
-                  <div >
-                      <p class="card-text"><b>Distance</b>: <span>{{restaurant.distance}} miles</span></p>
-                  </div>
+                <div>
+                    <p class="card-text"><b>Average Price</b>: <span> USD {{restaurant.price}}</span></p>
                 </div>
+                <div>
+                    <p class="card-text"><b>Customer Rating</b>: <span>{{restaurant.customer_rating}}</span></p>
+                </div>
+                <div >
+                    <p class="card-text"><b>Distance</b>: <span>{{restaurant.distance}} miles</span></p>
+                </div>
+              </div>
+            </div>
           </div>
       </div>
     </div>

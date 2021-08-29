@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { Restaurant } from './../service/restaurant.model';
 import { RestaurantService } from './../service/restaurants.service.component';
 
@@ -11,7 +12,6 @@ import { RestaurantService } from './../service/restaurants.service.component';
 export class SearchPageComponent implements OnInit {
 
   restaurants: Restaurant[] = [];
-  searchRef: string = '';
   constructor(private restaurantService: RestaurantService) { }
 
   ngOnInit(): void {
@@ -21,10 +21,8 @@ export class SearchPageComponent implements OnInit {
   searchRestaurants() {
     this.restaurantService
       .query({
-        "customer_rating": 3,
-        "price": 10
-      })
-      .subscribe(
+
+      }).subscribe(
         (body: Restaurant[]) => {
           this.restaurants = body;
         },
