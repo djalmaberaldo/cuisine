@@ -14,7 +14,6 @@ export class SearchPageComponent implements OnInit {
 
   constructor(private restaurantService: RestaurantService) { }
 
-
   ngOnInit(): void {
     this.searchRestaurants();
   }
@@ -23,12 +22,11 @@ export class SearchPageComponent implements OnInit {
     this.restaurantService
       .query()
       .subscribe(
-        (res: Restaurant[]) => {
-          this.restaurants = res;
+        (body: Restaurant[]) => {
+          this.restaurants = body;
         },
         (res: HttpErrorResponse) => console.log(res.message)
       );
-
   }
 
 }
