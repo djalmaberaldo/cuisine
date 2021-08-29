@@ -1,0 +1,31 @@
+.list-result {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  .card {
+      margin-top: 2rem;
+      width: 46%;
+  }
+  clear: left;
+}
+.search-input {
+  clear:right;
+}
+
+.form-check-label {
+    font-size: 20px;
+}
+
+.card-body{
+    flex-wrap: wrap;
+    div {
+        width: 50%;
+    }
+}
+
+.filters {
+    div{
+        flex-grow:1;
+    }
+}

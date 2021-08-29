@@ -8,6 +8,7 @@ import { SearchPageComponent } from './search-page/search-page.component';
   imports: [
     CommonModule,
     BestMatchRoutingModule
-  ]
+  ],
+  exports: [SearchPageComponent]
 })
 export class BestMatchModule { }
