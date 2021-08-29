@@ -14,14 +14,13 @@ export class SearchPageComponent implements OnInit {
   restaurants: Restaurant[] = [];
 
   filterForm = new FormGroup({
-    name: new FormControl(''),
-    cuisine: new FormControl(''),
+    name_restaurant: new FormControl(''),
+    name_cuisine: new FormControl(''),
     price: new FormControl(''),
     distance: new FormControl(''),
-    rating: new FormControl(''),
+    customer_rating: new FormControl(''),
   });
 
-  filterObject = {};
   constructor(private restaurantService: RestaurantService) { }
 
   ngOnInit(): void {
@@ -32,10 +31,15 @@ export class SearchPageComponent implements OnInit {
   }
 
   searchRestaurants() {
+    let filters =  this.filterForm.getRawValue();
+    Object.keys(filters).forEach(key => {
+      if(!filters[key]) {
+        delete filters[key];
+      }
+    });
+
     this.restaurantService
-      .query({
-        'name_restaurant': this.filterForm.get('name')?.value
-      }).subscribe(
+      .query(filters).subscribe(
         (body: Restaurant[]) => {
           this.restaurants = body;
         },
