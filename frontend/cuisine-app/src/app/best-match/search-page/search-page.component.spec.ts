@@ -3,6 +3,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SearchPageComponent } from './search-page.component';
+import { DebugElement } from '@angular/core';
+import { By } from '@angular/platform-browser';
 
 describe('SearchPageComponent', () => {
   let component: SearchPageComponent;
@@ -24,5 +26,11 @@ describe('SearchPageComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should have 5 filters inside the page', () => {
+    const debugElement: DebugElement = fixture.debugElement;
+    const filters = debugElement.queryAll(By.css('.form-control'));
+    expect(filters.length).toEqual(5);
   });
 });

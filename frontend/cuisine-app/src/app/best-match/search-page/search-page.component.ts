@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Restaurant } from './../service/restaurant.model';
-import { RestaurantService } from './../service/restaurants.service.component';
+import { RestaurantService } from '../service/restaurants.service';
 
 @Component({
   selector: 'app-search-page',
