@@ -22,9 +22,10 @@ def internal_server_error():
 
 
 @bp.before_request
-def validate_keys():
-    keys = request.args.to_dict().keys()
+def validate_keys_values():
     print('Validating parameters...')
-    for k in keys:
+    for k,v in request.args.to_dict().items():
         if k not in expect_keys:
-            return 'Invalid Parameters', 400
+            return 'Invalid parameter ' + k, 400
+        if v == 'null' or v == '':
+            return 'Invalid value inside key ' + k, 400
