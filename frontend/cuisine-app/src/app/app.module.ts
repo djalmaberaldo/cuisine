@@ -12,7 +12,7 @@ import { AppComponent } from './app.component';
   imports: [
     BestMatchModule,
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
