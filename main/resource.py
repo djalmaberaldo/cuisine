@@ -1,7 +1,7 @@
 import json
 import logging
 
-from flask import (Blueprint, Flask, json, render_template, request)
+from flask import (Blueprint, Flask, json, render_template, request, jsonify)
 
 from . import controller
 
@@ -12,11 +12,8 @@ expect_keys = ['distance','customer_rating', 'price', 'name_restaurant', 'name_c
 def search():
     list_of_filters = request.args.to_dict()
 
-    results = controller.search_all(list_of_filters)
-    return {
-        "status": 200,
-        "body": json.loads(results)
-    } 
+    results = json.loads(controller.search_all(list_of_filters))
+    return jsonify(results), 200
 
 
 @bp.errorhandler(500)
