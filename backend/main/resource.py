@@ -10,11 +10,12 @@ expect_keys = ['distance','customer_rating', 'price', 'name_restaurant', 'name_c
 
 logging.basicConfig(level=logging.INFO)
 
+
 @bp.route("/search", endpoint='search', methods=['GET'])
 def search():
     """
     Does the search by calling the search_all method
-    
+
     Returns:
         A jsonified list of restaurants with 200 status code
     """

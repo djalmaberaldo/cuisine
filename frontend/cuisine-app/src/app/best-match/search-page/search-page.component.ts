@@ -30,7 +30,26 @@ export class SearchPageComponent implements OnInit {
     this.searchRestaurants();
   }
 
+  /**
+   * Does the search of restaurants and sets them to restaurants
+   */
   searchRestaurants() {
+    this.restaurantService
+      .query(this.buildListOfFilters())
+      .subscribe(
+        (body: Restaurant[]) => {
+          this.restaurants = body;
+        },
+        (res: HttpErrorResponse) => console.log(res.message)
+      );
+  }
+
+  /**
+   * Get all the values from filter list and removes the not valid ones
+   *
+   * @returns the list of the filters
+   */
+  buildListOfFilters() {
     let filters =  this.filterForm.getRawValue();
     Object.keys(filters).forEach(key => {
       if(!filters[key]) {
@@ -38,13 +57,7 @@ export class SearchPageComponent implements OnInit {
       }
     });
 
-    this.restaurantService
-      .query(filters).subscribe(
-        (body: Restaurant[]) => {
-          this.restaurants = body;
-        },
-        (res: HttpErrorResponse) => console.log(res.message)
-      );
+    return filters;
   }
 
 }

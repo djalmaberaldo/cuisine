@@ -10,6 +10,12 @@ export class RestaurantService {
 
   constructor(protected http: HttpClient) {}
 
+  /**
+   * Does a get request to find the best restaurants based on the list of filters
+   *
+   * @param req
+   * @returns Observable<Restaurant[]>
+   */
   query(req?: any): Observable<Restaurant[]> {
     return this.http
       .get<Restaurant[]>(this.resourceUrl, {params: req});
