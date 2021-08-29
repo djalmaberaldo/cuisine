@@ -12,7 +12,7 @@ export class RestaurantService {
 
   query(req?: any): Observable<Restaurant[]> {
     return this.http
-      .get<Restaurant[]>(this.resourceUrl);
+      .get<Restaurant[]>(this.resourceUrl, {params: req});
   }
 
 }
