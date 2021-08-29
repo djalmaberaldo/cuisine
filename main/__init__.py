@@ -1,7 +1,7 @@
 import logging
 import os
-import flask_cors
 
+import flask_cors
 from flask import Flask
 
 

@@ -2,9 +2,7 @@
 import json
 import logging
 
-from flask import (Blueprint, Flask, Response, g, jsonify, render_template, json,
-                   request)
-from flask_expects_json import expects_json
+from flask import (Blueprint, Flask, json, render_template, request)
 
 from . import controller
 
@@ -25,8 +23,12 @@ def search():
                 "status": 403
             }
 
-    return json.dumps(controller.search_all(list_of_filters))
-
+    results = controller.search_all(list_of_filters)
+    return {
+        "status": 200,
+        "body": json.loads(results)
+    } 
+        
 @bp.errorhandler(500)
 def internal_server_error():
     return render_template('500.html'), 500
