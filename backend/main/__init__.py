@@ -16,7 +16,7 @@ def create_app(test_config=None):
         pass
 
     from flask_cors import CORS
-    cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
+    cors = CORS(app, resources={r"/resource/*": {"origins": "*"}})
 
     from . import resource
     app.register_blueprint(resource.bp)
