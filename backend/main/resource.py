@@ -10,9 +10,14 @@ expect_keys = ['distance','customer_rating', 'price', 'name_restaurant', 'name_c
 
 logging.basicConfig(level=logging.INFO)
 
-
 @bp.route("/search", endpoint='search', methods=['GET'])
 def search():
+    """
+    Does the search by calling the search_all method
+    
+    Returns:
+        A jsonified list of restaurants with 200 status code
+    """
     list_of_filters = request.args.to_dict()
 
     results = json.loads(controller.search_all(list_of_filters))
@@ -21,6 +26,12 @@ def search():
 
 @bp.before_request
 def validate_keys_values():
+    """
+    Validate the keys and values sent
+
+    Returns:
+        If any key or value is invalid, it returns a message with 400 status code
+    """
     logging.info('Validating parameters...')
     for k,v in request.args.to_dict().items():
         if k not in expect_keys:
