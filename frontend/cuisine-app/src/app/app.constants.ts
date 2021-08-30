@@ -1,1 +1,1 @@
-export const SERVER_API_URL = 'http://172.17.0.5:5000';
+export const SERVER_API_URL = 'http://172.17.0.2:5000';
