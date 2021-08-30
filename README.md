@@ -35,8 +35,9 @@
 
 __Important:__ depending on your system, make sure to use `pip3` and `python3` instead.
 
-- , first create virtual env
+- First create virtual env and activate it
 `python3 -m venv venv`
+
 `source venv/bin/activate`
 
 - Go to backend and on command line type (Windows):
@@ -44,7 +45,7 @@ __Important:__ depending on your system, make sure to use `pip3` and `python3` i
 `set FLASK_ENV=development`
 
 - Or Linux
-`export FLASK_APP = main`
+`export FLASK_APP=main`
 `export FLASK_ENV=development`
 
 - Then move to parent folder and type:
