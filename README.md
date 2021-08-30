@@ -58,3 +58,35 @@ __Important:__ depending on your system, make sure to use `pip3` and `python3` i
 - It's json file containing a test suite with 6 different request for testing purpose.
 - Every request has at least 2 tests.
 - It's necessary to import the json file into Postman. Instructions are here: https://kb.datamotion.com/?ht_kb=postman-instructions-for-exporting-and-importing
+
+
+### Front-end
+
+- The front-end project was created using **Angular CLI**.
+- First all, **Node.js** it is required so later we can install the packages we need and mainly, run the app. Follow instructions: https://nodejs.org/en/download/.
+
+- It is necessary to have it installed to run the app. Follow instructions here:  https://angular.io/cli.
+
+#### Running 
+
+- Create docker image and then run it (It's necessary to be in the root project folder):
+`cd frontend/cuisine-app && docker build -t cuisine:frontend . && docker run  -d -p 4200:80  cuisine:frontend`
+
+#### Design
+
+- There is one module called **best-match**, it contains the component **search-component**.
+- The UI looks like this:
+![Alt text](ui.JPG)
+- It shows at most 5 best restaurants according to filter's values added on top of the cards.
+
+
+##### Installing requirements and creating the front-end app (**If the docker process fails**)
+- Inside movie-app folder, run:
+`npm install`
+
+- It will check the packages on file packages.json and install locally the packages (**Bootstrap, NGXPagination**) inside the project.
+
+- To run the app, just type inside movie-app:
+	 `ng serve`
+
+- Open the browser on **localhost:4200**
