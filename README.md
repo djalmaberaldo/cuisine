@@ -85,6 +85,9 @@ __Important:__ depending on your system, make sure to use `pip3` and `python3` i
 - The UI looks like this:
 ![Alt text](ui.jpg)
 
+- It is responsive:
+![Alt text](responsive.jpg)
+
 - It shows at most 5 best restaurants according to filter's values added on top of the cards.
 
 
