@@ -76,7 +76,8 @@ __Important:__ depending on your system, make sure to use `pip3` and `python3` i
 
 - There is one module called **best-match**, it contains the component **search-component**.
 - The UI looks like this:
-![Alt text](ui.JPG)
+![Alt text](ui.jpg)
+
 - It shows at most 5 best restaurants according to filter's values added on top of the cards.
 
 
