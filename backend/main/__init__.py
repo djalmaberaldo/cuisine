@@ -1,3 +1,7 @@
+"""
+Module to create Flask App
+"""
+
 import logging
 import os
 
@@ -5,7 +9,13 @@ import flask_cors
 from flask import Flask
 
 
-def create_app(test_config=None):
+def create_app():
+    """
+    Creates the app
+
+    Returns:
+        The app running
+    """
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
 
@@ -15,12 +25,16 @@ def create_app(test_config=None):
     except OSError:
         pass
 
+    #pylint: disable=import-outside-toplevel
     from flask_cors import CORS
+    #pylint: disable=unused-variable
     cors = CORS(app, resources={r"/resource/*": {"origins": "*"}})
 
+    #pylint: disable=import-outside-toplevel
     from . import resource
     app.register_blueprint(resource.bp)
 
+    #pylint: disable=import-outside-toplevel
     from . import controller
     app.register_blueprint(controller.bp)
 

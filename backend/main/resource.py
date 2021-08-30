@@ -1,7 +1,11 @@
+"""
+File where the endpoint is located along with its validation method
+"""
+
 import json
 import logging
 
-from flask import (Blueprint, Flask, json, request, jsonify)
+from flask import (Blueprint, json, request, jsonify)
 
 from . import controller
 
@@ -34,8 +38,9 @@ def validate_keys_values():
         If any key or value is invalid, it returns a message with 400 status code
     """
     logging.info('Validating parameters...')
-    for k,v in request.args.to_dict().items():
-        if k not in expect_keys:
-            return 'Invalid parameter ' + k, 400
-        if v == 'null' or v == '':
-            return 'Invalid value inside key ' + k, 400
+    for key,value in request.args.to_dict().items():
+        if key not in expect_keys:
+            return 'Invalid parameter ' + key, 400
+        if value in ('null', ''):
+            return 'Invalid value inside key ' + key, 400
+    return None

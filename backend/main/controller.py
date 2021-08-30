@@ -1,7 +1,10 @@
-import json
+"""
+Module to search the data and filter by the list passed on the get request
+"""
+
 import logging
 import os
-from flask import (Blueprint, Flask, Response, jsonify, request)
+from flask import Blueprint
 
 import pandas as pd
 
@@ -13,9 +16,9 @@ file_to_search_cuisines =  os.path.join(package_dir,'../cuisines.csv')
 
 logging.basicConfig(level=logging.INFO)
 
-current_pagination = 5
+CURRENT_PAGINATION = 5
 
-def search_all(list_of_filters={}):
+def search_all(list_of_filters):
     """
     Search the restaurants based on the filters sent
 
@@ -27,23 +30,23 @@ def search_all(list_of_filters={}):
     """
 
     logging.info('Building dataframes ...')
-    df = build_dataframe()
+    data_frame = build_dataframe()
 
     logging.info('Applying filters ...')
-    df = apply_filters(df, list_of_filters)
+    data_frame = apply_filters(data_frame, list_of_filters)
 
     logging.info('Sorting datagframe ...')
-    df = sort_dataframe(df)
+    data_frame = sort_dataframe(data_frame)
 
-    logging.info('Retrieving the first ' + str(current_pagination) + ' rows...')
-    df = df.head(current_pagination)
-    js = df.to_json(orient = 'records')
-    return js
+    logging.info('Retrieving the first %s  rows...',  str(CURRENT_PAGINATION))
+    data_frame = data_frame.head(CURRENT_PAGINATION)
+    jsonified = data_frame.to_json(orient = 'records')
+    return jsonified
 
 
 def build_dataframe():
     """
-    Joins the dataframe restaurants.csv with cuisine.csv 
+    Joins the dataframe restaurants.csv with cuisine.csv
 
     Returns:
         The merged dataframe
@@ -52,11 +55,16 @@ def build_dataframe():
     cuisines_df = pd.read_csv(file_to_search_cuisines, index_col=False, sep=",")
 
     logging.info('Merging dataframes...')
-    df = restaurantes_df.merge(cuisines_df, left_on='cuisine_id', right_on='id', suffixes=("_restaurant","_cuisine"))
+    data_frame = restaurantes_df.merge(
+        cuisines_df,
+        left_on='cuisine_id',
+        right_on='id',
+        suffixes=("_restaurant","_cuisine")
+    )
 
     logging.info('Dropping columns..')
-    df = df.drop(columns=["id", "cuisine_id"])
-    return df
+    data_frame = data_frame.drop(columns=["id", "cuisine_id"])
+    return data_frame
 
 
 def apply_filters(data_frame, list_of_filters):
@@ -68,18 +76,17 @@ def apply_filters(data_frame, list_of_filters):
         list_of_filters (dict): The list of filters
 
     Returns:
-        The filtered dataframe 
+        The filtered dataframe
     """
-    if list_of_filters is not {}:
-        for key, value in list_of_filters.items():
-            if key in ['customer_rating']:
-                data_frame = data_frame.loc[data_frame[key] >= int(value)]
-            elif key in ['price', 'distance']:
-                data_frame = data_frame.loc[data_frame[key] <= int(value)]
-            else:
-                data_frame = data_frame.loc[data_frame[key].str.contains(value, case=False)]
+    for key, value in list_of_filters.items():
+        if key in ['customer_rating']:
+            data_frame = data_frame.loc[data_frame[key] >= int(value)]
+        elif key in ['price', 'distance']:
+            data_frame = data_frame.loc[data_frame[key] <= int(value)]
+        else:
+            data_frame = data_frame.loc[data_frame[key].str.contains(value, case=False)]
     return data_frame
-            
+
 
 def sort_dataframe(data_frame):
     """
@@ -100,6 +107,6 @@ def sort_dataframe(data_frame):
 
     logging.info('Sorting ...')
     return data_frame.sort_values(
-        by=['distance','customer_rating', 'price', 'name_restaurant', 'name_cuisine'], 
+        by=['distance','customer_rating', 'price', 'name_restaurant', 'name_cuisine'],
         ascending=[True, False, True, True, True]
     )
