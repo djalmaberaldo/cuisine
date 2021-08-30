@@ -1,0 +1,12 @@
+FROM python:3.7
+
+WORKDIR /app
+
+COPY . /app
+
+RUN pip3 install -r requirements.txt
+
+ENV FLASK_APP=main
+ENV FLASK_ENV=development
+
+CMD ["flask","run", "--host=172.17.0.5", "--port=5000"]
