@@ -154,7 +154,7 @@
 							"pm.test(\"Endpoint response must be correct for 10 different random numbers\", function() {",
 							"    for(let c=1; c<=10; c++){",
 							"        let customer_rating = getRandomInt(1,5)",
-							"        pm.sendRequest(`http://127.0.0.1:5000/resource/search?customer_rating=${customer_rating}`, function (err, response) {",
+							"        pm.sendRequest(`http://172.17.0.2:5000/resource/search?customer_rating=${customer_rating}`, function (err, response) {",
 							"            let body = response.json()",
 							"            body.forEach(function(item){",
 							"                pm.expect(item['customer_rating']).not.to.be.lessThan(customer_rating)",
@@ -208,7 +208,7 @@
 							"pm.test(\"Endpoint response must be correct for 10 different random numbers\", function() {",
 							"    for(let c=1; c<=10; c++){",
 							"        let price = getRandomInt(1,50)",
-							"        pm.sendRequest(`http://127.0.0.1:5000/resource/search?price=${price}`, function (err, response) {",
+							"        pm.sendRequest(`http://172.17.0.2:5000/resource/search?price=${price}`, function (err, response) {",
 							"            let body = response.json()",
 							"            body.forEach(function(item){",
 							"                pm.expect(item['price']).not.to.be.greaterThan(price)",
@@ -225,12 +225,11 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{baseUrl}}/resource/search?price=10",
+					"raw": "{{baseUrl}}/search?price=10",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
-						"resource",
 						"search"
 					],
 					"query": [
@@ -335,7 +334,7 @@
 	"variable": [
 		{
 			"key": "baseUrl",
-			"value": "http://172.17.0.5:5000/resource/"
+			"value": "http://172.17.0.2:5000/resource/"
 		}
 	]
 }
