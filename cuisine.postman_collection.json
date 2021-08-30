@@ -1,0 +1,341 @@
+{
+	"info": {
+		"_postman_id": "9180642c-20a2-4836-90f6-5494b1d57d52",
+		"name": "Cuisine",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Request with no filters",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"response is ok\", function() {",
+							"    pm.response.to.have.status(200)",
+							"});",
+							"",
+							"let body = pm.response.json()",
+							"",
+							"pm.test(\"Body length should be equals or lesser than 5\", function() {",
+							"    pm.expect(body.length).to.equal(5)",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/search",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"search"
+					]
+				},
+				"description": "Search with no filters"
+			},
+			"response": []
+		},
+		{
+			"name": "Request with invalid parameter",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status should be 400\", function() {",
+							"    pm.response.to.have.status(400)",
+							"});",
+							"",
+							"const responseText = pm.response.text();",
+							"pm.test(\"Message should be Invalid Parameters\", function() {",
+							"    pm.expect(responseText).equals('Invalid parameter name')",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/search?name=XPTO",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"search"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "XPTO"
+						}
+					]
+				},
+				"description": "Request with invalid parameter"
+			},
+			"response": []
+		},
+		{
+			"name": "Request with distance filter",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"response is ok\", function() {",
+							"    pm.response.to.have.status(200)",
+							"});",
+							"",
+							"let body = pm.response.json()",
+							"pm.test(\"Endpoint response muts be correct for 10 different random numbers\", function() {",
+							"    for(let c=1; c<=10; c++){",
+							"        let distance = Math.ceil(Math.random());",
+							"        pm.sendRequest(`http://127.0.0.1:5000/resource/search?distance=${distance}`, function (err, response) {",
+							"            let body = pm.response.json()",
+							"            body.forEach(function(item){",
+							"                pm.expect(item['distance']).not.to.be.greaterThan(distance)",
+							"            })",
+							"        });",
+							"    }",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/search?distance=10",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"search"
+					],
+					"query": [
+						{
+							"key": "distance",
+							"value": "10"
+						}
+					]
+				},
+				"description": "Request with distance filter equals 10"
+			},
+			"response": []
+		},
+		{
+			"name": "Request wtih custom ratings filter",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"response is ok\", function() {",
+							"    pm.response.to.have.status(200)",
+							"});",
+							"",
+							"function getRandomInt(min, max) {",
+							"  min = Math.ceil(min);",
+							"  max = Math.floor(max);",
+							"  return Math.floor(Math.random() * (max - min)) + min;",
+							"}",
+							"",
+							"pm.test(\"Endpoint response must be correct for 10 different random numbers\", function() {",
+							"    for(let c=1; c<=10; c++){",
+							"        let customer_rating = getRandomInt(1,5)",
+							"        pm.sendRequest(`http://127.0.0.1:5000/resource/search?customer_rating=${customer_rating}`, function (err, response) {",
+							"            let body = response.json()",
+							"            body.forEach(function(item){",
+							"                pm.expect(item['customer_rating']).not.to.be.lessThan(customer_rating)",
+							"            })",
+							"        });",
+							"    }",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/search?customer_rating=5",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"search"
+					],
+					"query": [
+						{
+							"key": "customer_rating",
+							"value": "5"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Request with price filter",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"response is ok\", function() {",
+							"    pm.response.to.have.status(200)",
+							"});",
+							"",
+							"function getRandomInt(min, max) {",
+							"  min = Math.ceil(min);",
+							"  max = Math.floor(max);",
+							"  return Math.floor(Math.random() * (max - min)) + min;",
+							"}",
+							"",
+							"pm.test(\"Endpoint response must be correct for 10 different random numbers\", function() {",
+							"    for(let c=1; c<=10; c++){",
+							"        let price = getRandomInt(1,50)",
+							"        pm.sendRequest(`http://127.0.0.1:5000/resource/search?price=${price}`, function (err, response) {",
+							"            let body = response.json()",
+							"            body.forEach(function(item){",
+							"                pm.expect(item['price']).not.to.be.greaterThan(price)",
+							"            })",
+							"        });",
+							"    }",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/resource/search?price=10",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"resource",
+						"search"
+					],
+					"query": [
+						{
+							"key": "price",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Request with multiple invalid parameters",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status should be 400\", function() {",
+							"    pm.response.to.have.status(400)",
+							"});",
+							"",
+							"const responseText = pm.response.text();",
+							"pm.test(\"Message should be Invalid value inside key name_restaurant\", function() {",
+							"    pm.expect(responseText).equals('Invalid value inside key name_restaurant')",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/search?name_restaurant=&distance=&price=&name_cuisine=&customer_rating=",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"search"
+					],
+					"query": [
+						{
+							"key": "name_restaurant",
+							"value": ""
+						},
+						{
+							"key": "distance",
+							"value": ""
+						},
+						{
+							"key": "price",
+							"value": ""
+						},
+						{
+							"key": "name_cuisine",
+							"value": ""
+						},
+						{
+							"key": "customer_rating",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"",
+					"if (pm.response.code == 200) {",
+					"    let body = pm.response.json()",
+					"",
+					"    pm.test(\"Body should contains at most 5 keys\", function() {",
+					"        body.forEach(function(item) {",
+					"            pm.expect(Object.keys(item).length)<= 5",
+					"        })",
+					"    })",
+					"}",
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://172.17.0.5:5000/resource/"
+		}
+	]
+}
