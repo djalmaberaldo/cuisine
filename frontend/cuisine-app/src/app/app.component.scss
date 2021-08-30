@@ -7,11 +7,6 @@ h6 {
   margin: 8px 0;
 }
 
-p {
-  margin: 0;
-}
-
-
 .toolbar {
   position: absolute;
   top: 0;
@@ -23,6 +18,10 @@ p {
   font-weight: 600;
 }
 
+.toolbar h2 {
+  display: grid;
+  place-items: center;
+}
 
 .content {
   display: flex;
@@ -56,31 +55,7 @@ p {
   line-height: 24px;
 }
 
-.card-container .card:not(:last-child) {
-  margin-right: 0;
-}
 
-.card.card-small {
-  height: 16px;
-  width: 168px;
-}
-
-.card-container .card:not(.highlight-card) {
-  cursor: pointer;
-}
-
-.card-container .card:not(.highlight-card):hover {
-  transform: translateY(-3px);
-  box-shadow: 0 4px 17px rgba(0, 0, 0, 0.35);
-}
-
-.card-container .card:not(.highlight-card):hover .material-icons path {
-  fill: rgb(105, 103, 103);
-}
-
-.card.card.highlight-card span {
-  margin-left: 60px;
-}
 
 
 a,
@@ -95,30 +70,5 @@ a:hover {
 }
 
 
-/* Responsive Styles */
-@media screen and (max-width: 767px) {
 
-  .card-container > *:not(.circle-link) ,
-  .terminal {
-    width: 100%;
-  }
 
-  .card:not(.highlight-card) {
-    height: 16px;
-    margin: 8px 0;
-  }
-
-  .card.highlight-card span {
-    margin-left: 72px;
-  }
-
-  svg#rocket-smoke {
-    right: 120px;
-    transform: rotate(-5deg);
-  }
-}
-
-.toolbar h2 {
-  display: grid;
-  place-items: center;
-}
