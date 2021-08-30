@@ -91,3 +91,11 @@ __Important:__ depending on your system, make sure to use `pip3` and `python3` i
 	 `ng serve`
 
 - Open the browser on **localhost:4200**
+
+#### Testing
+
+- Inside the folder frontend/cuisine-app, run:
+`ng test`
+
+- That should be the expected result:
+![Alt text](test.jpg)
