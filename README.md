@@ -51,3 +51,10 @@ __Important:__ depending on your system, make sure to use `pip3` and `python3` i
 `flask run --host=172.17.0.2 --port=5000`
 
 - The backend is already running!
+
+#### Testing on Postman
+
+- The root folder has a file called **cuisine.postman_collection.json".
+- It's json file containing a test suite with 6 different request for testing purpose.
+- Every request has at least 2 tests.
+- It's necessary to import the json file into Postman. Instructions are here: https://kb.datamotion.com/?ht_kb=postman-instructions-for-exporting-and-importing
