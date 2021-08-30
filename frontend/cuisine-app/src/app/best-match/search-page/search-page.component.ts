@@ -33,7 +33,7 @@ export class SearchPageComponent implements OnInit {
   /**
    * Does the search of restaurants and sets them to restaurants
    */
-  searchRestaurants() {
+  searchRestaurants(): void {
     this.restaurantService
       .query(this.buildListOfFilters())
       .subscribe(
@@ -49,10 +49,10 @@ export class SearchPageComponent implements OnInit {
    *
    * @returns the list of the filters
    */
-  buildListOfFilters() {
-    let filters =  this.filterForm.getRawValue();
+  buildListOfFilters(): object {
+    const filters =  this.filterForm.getRawValue();
     Object.keys(filters).forEach(key => {
-      if(!filters[key]) {
+      if (!filters[key]) {
         delete filters[key];
       }
     });

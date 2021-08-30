@@ -7,13 +7,13 @@ describe('RestaurantsService', () => {
   let service: RestaurantService;
   let httpClient: HttpClient;
   let httpClientMock;
-  let restaurantResponse: Restaurant[] = [
+  const restaurantResponse: Restaurant[] = [
     {
       distance: 10,
       price: 10,
       customer_rating: 4,
-      name_cuisine: "Cuisine",
-      name_restaurant: "Restaurant"
+      name_cuisine: 'Cuisine',
+      name_restaurant: 'Restaurant'
     }];
 
   beforeEach(() => {
@@ -21,7 +21,6 @@ describe('RestaurantsService', () => {
       get: (): Observable<any> => of(restaurantResponse)
     };
     service = new RestaurantService(httpClient);
-    localStorage.setItem('sso_token', 'sso_token');
   });
 
   it('should get the restaurants', () => {
