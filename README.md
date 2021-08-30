@@ -21,7 +21,7 @@
 	- For every request the python library Pandas merges the restaurants.csv and cuisine.csv into one datframe. 
 	- Optional params are: **name_restaurant, name_cuisine, price, distance, customer_rating**.
 	- If the keys or the values are invalid, a message with status 400 will be sent as response.
-	- The sort order is Distance, Customer Rating, Price, Restaurant Name and Cuisine Name.
+	- The sort order is **1.Distance, 2.Customer Rating, 3.Price, 4.Restaurant Name and 5.Cuisine Name**.
 	- It searches restaurants based on the params.
 
 #### Running
@@ -49,9 +49,15 @@ __Important:__ depending on your system, make sure to use `pip3` and `python3` i
 `export FLASK_ENV=development`
 
 - Then move to parent folder and type:
-`flask run --host=172.17.0.2 --port=5000`
+`flask run`
 
-- The backend is already running!
+- Check the host and port of flask app:
+![Alt text](hostport.jpg)
+
+- It is necessary the file **app.constants.ts** inside the frontend folder and change the value of SERVER_API_URL:
+![Alt text](serverapi.jpg)
+
+
 
 #### Testing on Postman
 
