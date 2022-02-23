@@ -12,7 +12,7 @@ from . import controller
 bp = Blueprint('resource', __name__, url_prefix='/resource')
 expect_keys = ['distance','customer_rating', 'price', 'name_restaurant', 'name_cuisine']
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.DEBUG)
 
 
 @bp.route("/search", endpoint='search', methods=['GET'])
@@ -23,6 +23,7 @@ def search():
     Returns:
         A jsonified list of restaurants with 200 status code
     """
+
     list_of_filters = request.args.to_dict()
 
     results = json.loads(controller.search_all(list_of_filters))
