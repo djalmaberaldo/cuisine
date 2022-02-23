@@ -7,7 +7,7 @@ import logging
 
 from flask import (Blueprint, json, request, jsonify)
 
-from . import controller
+from . import service
 
 bp = Blueprint('resource', __name__, url_prefix='/resource')
 expect_keys = ['distance','customer_rating', 'price', 'name_restaurant', 'name_cuisine']
@@ -26,7 +26,7 @@ def search():
 
     list_of_filters = request.args.to_dict()
 
-    results = json.loads(controller.search_all(list_of_filters))
+    results = json.loads(service.search_all(list_of_filters))
     return jsonify(results), 200
 
 
