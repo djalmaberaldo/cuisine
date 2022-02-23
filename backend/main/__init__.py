@@ -31,11 +31,11 @@ def create_app():
     cors = CORS(app, resources={r"/resource/*": {"origins": "*"}})
 
     #pylint: disable=import-outside-toplevel
-    from . import service
-    app.register_blueprint(service.bp)
+    from . import resource
+    app.register_blueprint(resource.bp)
 
     #pylint: disable=import-outside-toplevel
-    from . import controller
-    app.register_blueprint(controller.bp)
+    from . import service
+    app.register_blueprint(service.bp)
 
     return app

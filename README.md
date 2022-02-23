@@ -8,7 +8,7 @@
 
 #### Running
 - Using docker-compose, just run:
-`docker-compose up`
+`docker compose up`
 
 ### Backend
 
@@ -35,7 +35,7 @@
 - Every request has at least 2 tests.
 - It's necessary to import the json file into Postman. Instructions are here: https://kb.datamotion.com/?ht_kb=postman-instructions-for-exporting-and-importing
 
-![Alt text](test-results-postman.jpg)
+![Alt text](images/test-results-postman.jpg)
 
 
 ### Front-end
@@ -49,10 +49,10 @@
 
 - There is one module called **best-match**, it contains the component **search-component**.
 - The UI looks like this:
-![Alt text](ui.jpg)
+![Alt text](images/ui.jpg)
 
 - It is responsive:
-![Alt text](responsive.jpg)
+![Alt text](images/responsive.jpg)
 
 - It shows at most 5 best restaurants according to filter's values added on top of the cards.
 
@@ -67,4 +67,4 @@
 `ng test`
 
 - That should be the expected result:
-![Alt text](test.jpg)
+![Alt text](images/test.jpg)

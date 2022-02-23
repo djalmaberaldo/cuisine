@@ -1,47 +1,112 @@
 """
-File where the endpoint is located along with its validation method
+Module to search the data and filter by the list passed on the get request
 """
 
-import json
 import logging
+import os
+from flask import Blueprint
 
-from flask import (Blueprint, json, request, jsonify)
+import pandas as pd
 
-from . import service
+bp = Blueprint('controller', __name__)
 
-bp = Blueprint('resource', __name__, url_prefix='/resource')
-expect_keys = ['distance','customer_rating', 'price', 'name_restaurant', 'name_cuisine']
+package_dir = os.path.dirname(os.path.realpath(__file__+'../'))
+file_to_search_restaurants =  os.path.join(package_dir,'../restaurants.csv')
+file_to_search_cuisines =  os.path.join(package_dir,'../cuisines.csv')
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.INFO)
 
+CURRENT_PAGINATION = 5
 
-@bp.route("/search", endpoint='search', methods=['GET'])
-def search():
+def search_all(list_of_filters):
     """
-    Does the search by calling the search_all method
+    Search the restaurants based on the filters sent
+
+    Args:
+        list_of_filters (dict, optional): The list of filters Defaults to {}.
 
     Returns:
-        A jsonified list of restaurants with 200 status code
+       The result dataframe converted to JSON
     """
 
-    list_of_filters = request.args.to_dict()
+    logging.info('Building dataframes ...')
+    data_frame = build_dataframe()
 
-    results = json.loads(service.search_all(list_of_filters))
-    return jsonify(results), 200
+    logging.info('Applying filters ...')
+    data_frame = apply_filters(data_frame, list_of_filters)
+
+    logging.info('Sorting datagframe ...')
+    data_frame = sort_dataframe(data_frame)
+
+    logging.info('Retrieving the first %s  rows...',  str(CURRENT_PAGINATION))
+    data_frame = data_frame.head(CURRENT_PAGINATION)
+    jsonified = data_frame.to_json(orient = 'records')
+    return jsonified
 
 
-@bp.before_request
-def validate_keys_values():
+def build_dataframe():
     """
-    Validate the keys and values sent
+    Joins the dataframe restaurants.csv with cuisine.csv
 
     Returns:
-        If any key or value is invalid, it returns a message with 400 status code
+        The merged dataframe
     """
-    logging.info('Validating parameters...')
-    for key,value in request.args.to_dict().items():
-        if key not in expect_keys:
-            return 'Invalid parameter ' + key, 400
-        if value in ('null', ''):
-            return 'Invalid value inside key ' + key, 400
-    return None
+    restaurantes_df = pd.read_csv(file_to_search_restaurants, index_col=False, sep=",")
+    cuisines_df = pd.read_csv(file_to_search_cuisines, index_col=False, sep=",")
+
+    logging.info('Merging dataframes...')
+    data_frame = restaurantes_df.merge(
+        cuisines_df,
+        left_on='cuisine_id',
+        right_on='id',
+        suffixes=("_restaurant","_cuisine")
+    )
+
+    logging.info('Dropping columns..')
+    data_frame = data_frame.drop(columns=["id", "cuisine_id"])
+    return data_frame
+
+
+def apply_filters(data_frame, list_of_filters):
+    """
+    Filters the database based on the list of filters
+
+    Args:
+        data_frame (dataframe): The current dataframe
+        list_of_filters (dict): The list of filters
+
+    Returns:
+        The filtered dataframe
+    """
+    for key, value in list_of_filters.items():
+        if key in ['customer_rating']:
+            data_frame = data_frame.loc[data_frame[key] >= int(value)]
+        elif key in ['price', 'distance']:
+            data_frame = data_frame.loc[data_frame[key] <= int(value)]
+        else:
+            data_frame = data_frame.loc[data_frame[key].str.contains(value, case=False)]
+    return data_frame
+
+
+def sort_dataframe(data_frame):
+    """
+    Sorts the dataframe by the following order
+
+    distance -> Ascending
+    customer_rating -> Descending
+    price -> Ascending
+    name_restaurant -> Ascending
+    name_cuisine -> Ascending
+
+    Args:
+        data_frame: The current panda dataframe
+
+    Returns:
+        The dataframe sorted
+    """
+
+    logging.info('Sorting ...')
+    return data_frame.sort_values(
+        by=['distance','customer_rating', 'price', 'name_restaurant', 'name_cuisine'],
+        ascending=[True, False, True, True, True]
+    )
