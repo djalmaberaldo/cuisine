@@ -6,6 +6,9 @@
 - **Front-end** : Angular
 - **Database**: No database, just two .csv files with content to manage
 
+#### Running
+- Using docker-compose, just run:
+`docker-compose up`
 
 ### Backend
 
@@ -23,40 +26,6 @@
 	- If the keys or the values are invalid, a message with status 400 will be sent as response.
 	- The sort order is **1.Distance, 2.Customer Rating, 3. Avg. Price, 4.Restaurant Name and 5.Cuisine Name**.
 	- It searches restaurants based on the params.
-
-#### Running
-- Create docker image and then run it (It's necessary to be in the root project folder):
-`cd backend && docker build -t cuisine:backend . && docker run cuisine:backend`
-
-##### Installing requirements and creating the backend app (**If the docker process fails**)
-- It is necessary to have Python installed. This can be achieved by following instructions here:  https://www.python.org/downloads/
-- It is higly recommended to have installed PyPA for installing Python packages on command line. This can be achieved by following instructions here: https://pypi.org/
-- Inside the folder **backend**, there is a requirements.txt file.  There, you can find all the necessary packages and its versions to run the backend properly. A faster installion would be running the command **pip3 install -r requirements.txt** .
-
-__Important:__ depending on your system, make sure to use `pip3` and `python3` instead.
-
-- First create virtual env and activate it
-`python3 -m venv venv`
-
-`source venv/bin/activate`
-
-- Go to backend and on command line type (Windows):
-`set FLASK_APP=main`
-`set FLASK_ENV=development`
-
-- Or Linux
-`export FLASK_APP=main`
-`export FLASK_ENV=development`
-
-- Then move to parent folder and type:
-`flask run`
-
-- Check the host and port of flask app:
-![Alt text](hostport.jpg)
-
-- It is necessary the file **app.constants.ts** inside the frontend folder and change the value of SERVER_API_URL:
-![Alt text](serverapi.jpg)
-
 
 
 #### Testing on Postman
@@ -76,11 +45,6 @@ __Important:__ depending on your system, make sure to use `pip3` and `python3` i
 
 - It is necessary to have it installed to run the app. Follow instructions here:  https://angular.io/cli.
 
-#### Running 
-
-- Create docker image and then run it (It's necessary to be in the root project folder):
-`cd frontend/cuisine-app && docker build -t cuisine:frontend . && docker run  -d -p 4200:80  cuisine:frontend`
-
 #### Design
 
 - There is one module called **best-match**, it contains the component **search-component**.
@@ -91,13 +55,6 @@ __Important:__ depending on your system, make sure to use `pip3` and `python3` i
 ![Alt text](responsive.jpg)
 
 - It shows at most 5 best restaurants according to filter's values added on top of the cards.
-
-
-##### Installing requirements and creating the front-end app (**If the docker process fails**)
-- Inside movie-app folder, run:
-`npm install`
-
-- It will check the packages on file packages.json and install locally the packages (**Bootstrap, NGXPagination**) inside the project.
 
 - To run the app, just type inside movie-app:
 	 `ng serve`
