@@ -14,9 +14,32 @@ package_dir = os.path.dirname(os.path.realpath(__file__+'../'))
 file_to_search_restaurants =  os.path.join(package_dir,'../restaurants.csv')
 file_to_search_cuisines =  os.path.join(package_dir,'../cuisines.csv')
 
-logging.basicConfig(level=logging.INFO)
+def build_dataframe():
+    """
+    Joins the dataframe restaurants.csv with cuisine.csv
 
-CURRENT_PAGINATION = 5
+    Returns:
+        The merged dataframe
+    """
+    restaurantes_df = pd.read_csv(file_to_search_restaurants, index_col=False, sep=",")
+    cuisines_df = pd.read_csv(file_to_search_cuisines, index_col=False, sep=",")
+
+    logging.info('Merging dataframes...')
+    df = restaurantes_df.merge(
+        cuisines_df,
+        left_on='cuisine_id',
+        right_on='id',
+        suffixes=("_restaurant","_cuisine")
+    )
+
+    logging.info('Dropping columns..')
+    df = df.drop(columns=["id", "cuisine_id"])
+    return df
+
+logging.info('Building dataframes ...')
+data_frame = build_dataframe()
+
+logging.basicConfig(level=logging.INFO)
 
 def search_all(list_of_filters):
     """
@@ -29,43 +52,13 @@ def search_all(list_of_filters):
        The result dataframe converted to JSON
     """
 
-    logging.info('Building dataframes ...')
-    data_frame = build_dataframe()
 
     logging.info('Applying filters ...')
-    data_frame = apply_filters(data_frame, list_of_filters)
+    search = apply_filters(data_frame, list_of_filters)
 
     logging.info('Sorting datagframe ...')
-    data_frame = sort_dataframe(data_frame)
-
-    logging.info('Retrieving the first %s  rows...',  str(CURRENT_PAGINATION))
-    data_frame = data_frame.head(CURRENT_PAGINATION)
-    jsonified = data_frame.to_json(orient = 'records')
-    return jsonified
-
-
-def build_dataframe():
-    """
-    Joins the dataframe restaurants.csv with cuisine.csv
-
-    Returns:
-        The merged dataframe
-    """
-    restaurantes_df = pd.read_csv(file_to_search_restaurants, index_col=False, sep=",")
-    cuisines_df = pd.read_csv(file_to_search_cuisines, index_col=False, sep=",")
-
-    logging.info('Merging dataframes...')
-    data_frame = restaurantes_df.merge(
-        cuisines_df,
-        left_on='cuisine_id',
-        right_on='id',
-        suffixes=("_restaurant","_cuisine")
-    )
-
-    logging.info('Dropping columns..')
-    data_frame = data_frame.drop(columns=["id", "cuisine_id"])
-    return data_frame
-
+    search = sort_dataframe(search)
+    return search.to_json(orient = 'records')
 
 def apply_filters(data_frame, list_of_filters):
     """

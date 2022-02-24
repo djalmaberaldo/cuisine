@@ -1,0 +1,32 @@
+.list-result {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    .card {
+        margin-top: 2rem;
+        width: 46%;
+    }
+    clear: left;
+  }
+  
+.card-body{
+    flex-wrap: wrap;
+    div {
+        width: 50%;
+    }
+}
+
+.card {
+border-radius: 10px;
+border-style: 10px;
+}
+
+.card-header {
+background-color: lightblue;
+}
+
+.card-title {
+text-align: center;
+font-size: 18px;
+}

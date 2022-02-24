@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Restaurant } from './../service/restaurant.model';
 import { RestaurantService } from '../service/restaurants.service';
 
@@ -18,7 +18,7 @@ export class SearchPageComponent implements OnInit {
     name_cuisine: new FormControl(''),
     price: new FormControl(''),
     distance: new FormControl(''),
-    customer_rating: new FormControl(''),
+    customer_rating: new FormControl('', [Validators.max(5)]),
   });
 
   constructor(private restaurantService: RestaurantService) { }

@@ -4,9 +4,10 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BestMatchRoutingModule } from './best-match.route';
 import { SearchPageComponent } from './search-page/search-page.component';
+import { RestaurantCardListComponent } from './restaurant-card-list/restaurant-card-list.component';
 
 @NgModule({
-  declarations: [SearchPageComponent],
+  declarations: [SearchPageComponent, RestaurantCardListComponent],
   imports: [
     CommonModule,
     FormsModule,

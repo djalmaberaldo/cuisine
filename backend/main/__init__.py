@@ -37,5 +37,5 @@ def create_app():
     #pylint: disable=import-outside-toplevel
     from . import service
     app.register_blueprint(service.bp)
-
+        
     return app
