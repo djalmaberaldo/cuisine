@@ -10,6 +10,8 @@ import pandas as pd
 
 bp = Blueprint('controller', __name__)
 logging.basicConfig(level=logging.INFO)
+package_dir = os.path.dirname(os.path.realpath(__file__+'../'))
+file_to_search_restaurants =  os.path.join(package_dir,'../restaurants.csv')
 
 
 def build_dataframe():
@@ -20,8 +22,6 @@ def build_dataframe():
         The merged dataframe
     """
 
-    package_dir = os.path.dirname(os.path.realpath(__file__+'../'))
-    file_to_search_restaurants =  os.path.join(package_dir,'../restaurants.csv')
     file_to_search_cuisines =  os.path.join(package_dir,'../cuisines.csv')
 
     restaurantes_df = pd.read_csv(file_to_search_restaurants, index_col=False, sep=";")
@@ -54,7 +54,6 @@ def search_all(list_of_filters):
     Returns:
        The result dataframe converted to JSON
     """
-
 
     logging.info('Applying filters ...')
     search = apply_filters(data_frame, list_of_filters)
@@ -107,3 +106,10 @@ def sort_dataframe(data_frame):
         by=['distance','customer_rating', 'price', 'name_restaurant', 'name_cuisine'],
         ascending=[True, False, True, True, True]
     )
+
+
+def add_restaurant(listOfFilters):
+    global data_frame
+    listOfFilters['restaurant_id'] = data_frame['restaurant_id'].iloc[-1]
+    data_frame = data_frame.append(listOfFilters, ignore_index= True)
+    return 'Restaurant added'
