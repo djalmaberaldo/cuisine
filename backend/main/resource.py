@@ -68,9 +68,9 @@ def delete():
         A jsonified list of restaurants with 200 status code
     """
 
-    list_of_filters = request.json
+    res = request.json['restaurant_id']
 
-    results = service.add_restaurant(list_of_filters)
+    results = service.remove_restaurant(res)
     return results, 200
 
 

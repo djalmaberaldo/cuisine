@@ -113,3 +113,10 @@ def add_restaurant(listOfFilters):
     listOfFilters['restaurant_id'] = data_frame['restaurant_id'].iloc[-1]
     data_frame = data_frame.append(listOfFilters, ignore_index= True)
     return 'Restaurant added'
+
+
+def remove_restaurant(restaurant_id):
+    logging.info(restaurant_id)
+    global data_frame
+    data_frame = data_frame[data_frame['restaurant_id'] != restaurant_id]
+    return 'Restaurant removed'
