@@ -1,5 +1,6 @@
 
 export interface Restaurant {
+  restaurant_id?: number;
   distance?: number;
   price?: number;
   customer_rating?: number;

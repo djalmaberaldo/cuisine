@@ -9,10 +9,8 @@ from flask import Blueprint
 import pandas as pd
 
 bp = Blueprint('controller', __name__)
+logging.basicConfig(level=logging.INFO)
 
-package_dir = os.path.dirname(os.path.realpath(__file__+'../'))
-file_to_search_restaurants =  os.path.join(package_dir,'../restaurants.csv')
-file_to_search_cuisines =  os.path.join(package_dir,'../cuisines.csv')
 
 def build_dataframe():
     """
@@ -21,7 +19,12 @@ def build_dataframe():
     Returns:
         The merged dataframe
     """
-    restaurantes_df = pd.read_csv(file_to_search_restaurants, index_col=False, sep=",")
+
+    package_dir = os.path.dirname(os.path.realpath(__file__+'../'))
+    file_to_search_restaurants =  os.path.join(package_dir,'../restaurants.csv')
+    file_to_search_cuisines =  os.path.join(package_dir,'../cuisines.csv')
+
+    restaurantes_df = pd.read_csv(file_to_search_restaurants, index_col=False, sep=";")
     cuisines_df = pd.read_csv(file_to_search_cuisines, index_col=False, sep=",")
 
     logging.info('Merging dataframes...')
@@ -36,10 +39,10 @@ def build_dataframe():
     df = df.drop(columns=["id", "cuisine_id"])
     return df
 
+
 logging.info('Building dataframes ...')
 data_frame = build_dataframe()
 
-logging.basicConfig(level=logging.INFO)
 
 def search_all(list_of_filters):
     """
@@ -59,6 +62,7 @@ def search_all(list_of_filters):
     logging.info('Sorting datagframe ...')
     search = sort_dataframe(search)
     return search.to_json(orient = 'records')
+
 
 def apply_filters(data_frame, list_of_filters):
     """
