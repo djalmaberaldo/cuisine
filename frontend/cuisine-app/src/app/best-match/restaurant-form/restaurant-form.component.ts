@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Cuisine, Restaurant } from '../service/restaurant.model';
+import { Restaurant } from '../service/restaurant.model';
 import { RestaurantService } from '../service/restaurants.service';
 
 @Component({
@@ -44,13 +44,13 @@ export class RestaurantFormComponent  {
     if (this.isUpdate) {
       this.restaurantService.update(this.filterForm.value).subscribe(
         () => {
-          console.log('Restaurant Updated');
+          alert('Restaurant Updated');
           this.router.navigate(['']);
         });
     } else {
       this.restaurantService.post(this.filterForm.value).subscribe(
         () => {
-          console.log('Restaurant Added');
+          alert('Restaurant Added');
           this.router.navigate(['']);
         });
     }

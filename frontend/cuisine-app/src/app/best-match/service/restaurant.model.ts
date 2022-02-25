@@ -9,8 +9,3 @@ export interface Restaurant {
   name_restaurant?: string;
 }
 
-export interface Cuisine {
-  id?: number;
-  name?: String; 
-}
-

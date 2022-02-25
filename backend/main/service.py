@@ -2,12 +2,11 @@
 Module to search the data and filter by the list passed on the get request
 """
 
-import json
 import logging
 import os
-from flask import Blueprint
 
 import pandas as pd
+from flask import Blueprint
 
 bp = Blueprint('controller', __name__)
 logging.basicConfig(level=logging.INFO)
@@ -50,11 +49,7 @@ def search_all(list_of_filters):
 
     logging.info('Sorting datagframe ...')
     search = sort_dataframe(search)
-    return search.to_json(orient = 'records')
-
-
-def get_cuisines():
-    return pd.read_csv(file_to_search_cuisines, index_col=False, sep=",").to_json(orient = 'records')
+    return search.head(4).to_json(orient = 'records')
 
 
 def apply_filters(data_frame, list_of_filters):
@@ -109,5 +104,5 @@ def update_restaurant(listOfFilters):
 
 def remove_restaurant(restaurant_id):
     global data_frame
-    data_frame = data_frame[data_frame['restaurant_id'] != restaurant_id]
-    return {"message": 'Restaurant removed'}
+    data_frame = data_frame[data_frame.restaurant_id != restaurant_id]
+    return data_frame.head(4).to_json(orient = 'records')

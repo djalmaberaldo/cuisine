@@ -23,5 +23,5 @@
     </div>
   </div>
 </form>
-<app-restaurant-card-list [restaurants]="restaurants"></app-restaurant-card-list>
+<app-restaurant-card-list (updateRestaurantList)="updateList($event)" [restaurants]="restaurants"></app-restaurant-card-list>
 

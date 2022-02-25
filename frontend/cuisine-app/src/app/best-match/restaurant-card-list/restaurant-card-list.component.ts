@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Restaurant } from '../service/restaurant.model';
 import { RestaurantService } from '../service/restaurants.service';
@@ -11,6 +11,7 @@ import { RestaurantService } from '../service/restaurants.service';
 export class RestaurantCardListComponent {
 
   @Input() restaurants:Restaurant[] = [];
+  @Output() updateRestaurantList = new EventEmitter<Restaurant[]>();
 
   constructor(
     private restaurantService:RestaurantService,
@@ -18,10 +19,13 @@ export class RestaurantCardListComponent {
 
   deleteRestaurant(id: any) {
     this.restaurantService.delete(id).subscribe(
-      () => alert("Restaurant removed"));
+      (restaurants: Restaurant[]) => {
+        alert("Restaurant removed");
+        this.updateRestaurantList.emit(restaurants);
+      });
   }
 
-  updateRestaurant(restaurant: any) {
+  updateRestaurant(restaurant: Restaurant) {
     this.route.navigate(['update', restaurant.restaurant_id], {state: { restaurant: restaurant }});
   }
 }

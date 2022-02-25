@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { SERVER_API_URL } from 'src/app/app.constants';
-import { Cuisine, Restaurant } from './restaurant.model';
+import { Restaurant } from './restaurant.model';
 
 @Injectable({ providedIn: 'root' })
 export class RestaurantService {

@@ -30,3 +30,9 @@
     text-align: center;
     font-size: 18px;
 }
+
+.card-footer {
+    button {
+        flex-grow: 1;
+    }
+}

@@ -67,4 +67,8 @@ export class SearchPageComponent implements OnInit {
     this.route.navigate(['/add']);
   }
 
+  updateList(list: Restaurant[]) {
+    this.restaurants = list;
+  }
+
 }
