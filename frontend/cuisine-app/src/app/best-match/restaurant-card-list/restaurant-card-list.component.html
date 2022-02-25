@@ -2,21 +2,24 @@
     <div class="card" *ngFor="let restaurant of restaurants ">
         <div class="card-header">
             <h6 class="card-title">{{restaurant.name_restaurant}}</h6>
-            <button type="button" class="btn-danger" (click)="deleteRestaurant(restaurant.restaurant_id)">DELETE </button>
         </div>
         <div class="card-body d-flex">
-        <div>
-            <p class="card-text"><b>Cuisine Type</b>: <span>{{restaurant.name_cuisine}}</span></p>
+            <div>
+                <p class="card-text"><b>Cuisine Type</b>: <span>{{restaurant.name_cuisine}}</span></p>
+            </div>
+            <div>
+                <p class="card-text"><b>Average Price</b>: <span> USD {{restaurant.price}}</span></p>
+            </div>
+            <div>
+                <p class="card-text"><b>Customer Rating</b>: <span>{{restaurant.customer_rating}}</span></p>
+            </div>
+            <div >
+                <p class="card-text"><b>Distance</b>: <span>{{restaurant.distance}} miles</span></p>
+            </div>
         </div>
-        <div>
-            <p class="card-text"><b>Average Price</b>: <span> USD {{restaurant.price}}</span></p>
-        </div>
-        <div>
-            <p class="card-text"><b>Customer Rating</b>: <span>{{restaurant.customer_rating}}</span></p>
-        </div>
-        <div >
-            <p class="card-text"><b>Distance</b>: <span>{{restaurant.distance}} miles</span></p>
-        </div>
+        <div class="card-footer d-flex">
+            <button type="button" class="btn btn-warning" > Update </button>
+            <button type="button" class="btn btn-danger" (click)="deleteRestaurant(restaurant.restaurant_id)">Delete </button>
         </div>
     </div>
 </div>

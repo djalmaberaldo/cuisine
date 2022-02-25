@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Restaurant } from '../service/restaurant.model';
 import { RestaurantService } from '../service/restaurants.service';
 
@@ -21,7 +22,9 @@ export class SearchPageComponent implements OnInit {
     customer_rating: new FormControl('', [Validators.max(5)]),
   });
 
-  constructor(private restaurantService: RestaurantService) { }
+  constructor(
+    private restaurantService: RestaurantService,
+    private route: Router) { }
 
   ngOnInit(): void {
     this.filterForm.valueChanges.subscribe(() => {
@@ -58,6 +61,10 @@ export class SearchPageComponent implements OnInit {
     });
 
     return filters;
+  }
+
+  addRestaurant() {
+    this.route.navigate(['/add']);
   }
 
 }

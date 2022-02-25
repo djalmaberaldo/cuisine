@@ -12,7 +12,7 @@ from flask import (Blueprint, json, request, jsonify)
 from . import service
 
 bp = Blueprint('resource', __name__, url_prefix='/resource')
-expect_keys = ['distance','customer_rating', 'price', 'name_restaurant', 'name_cuisine']
+expect_keys = ['distance','customer_rating', 'price', 'name_restaurant', 'name_cuisine', 'restaurant_id']
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -74,6 +74,27 @@ def add():
     return jsonify(results), 200
 
 
+@bp.route("/update", endpoint='update', methods=['PUT'])
+def update():
+    """
+    Does the search by calling the search_all method
+
+    Returns:
+        A jsonified list of restaurants with 200 status code
+    """
+
+    for key,value in request.json.items():
+        if key not in expect_keys:
+            return 'Invalid parameter ' + key, 400
+        if value in ('null', ''):
+            return 'Invalid value inside key ' + key, 400
+
+    list_of_filters = request.json
+
+    results = json.loads(service.update_restaurant(list_of_filters))
+    return jsonify(results), 200
+
+
 @bp.route("/delete/<restaurant_id>", endpoint='delete', methods=['DELETE'])
 def delete(restaurant_id):
     """
@@ -84,6 +105,6 @@ def delete(restaurant_id):
     """
 
     results = service.remove_restaurant(restaurant_id)
-    return results, 200
+    return jsonify(results), 200
 
 

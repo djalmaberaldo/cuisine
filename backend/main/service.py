@@ -45,16 +45,6 @@ data_frame = build_dataframe()
 
 
 def search_all(list_of_filters):
-    """
-    Search the restaurants based on the filters sent
-
-    Args:
-        list_of_filters (dict, optional): The list of filters Defaults to {}.
-
-    Returns:
-       The result dataframe converted to JSON
-    """
-
     logging.info('Applying filters ...')
     search = apply_filters(data_frame, list_of_filters)
 
@@ -64,30 +54,10 @@ def search_all(list_of_filters):
 
 
 def get_cuisines():
-    """
-    Search the restaurants based on the filters sent
-
-    Args:
-        list_of_filters (dict, optional): The list of filters Defaults to {}.
-
-    Returns:
-       The result dataframe converted to JSON
-    """
     return pd.read_csv(file_to_search_cuisines, index_col=False, sep=",").to_json(orient = 'records')
 
 
-
 def apply_filters(data_frame, list_of_filters):
-    """
-    Filters the database based on the list of filters
-
-    Args:
-        data_frame (dataframe): The current dataframe
-        list_of_filters (dict): The list of filters
-
-    Returns:
-        The filtered dataframe
-    """
     for key, value in list_of_filters.items():
         if key in ['customer_rating']:
             data_frame = data_frame.loc[data_frame[key] >= int(value)]
@@ -129,7 +99,15 @@ def add_restaurant(listOfFilters):
     return data_frame[data_frame['restaurant_id']== listOfFilters['restaurant_id']].to_json(orient='records')
 
 
+def update_restaurant(listOfFilters):
+    global data_frame
+    restaurant_id = listOfFilters['restaurant_id']
+    data_frame = data_frame[data_frame['restaurant_id'] != restaurant_id]
+    data_frame = data_frame.append(listOfFilters, ignore_index= True)
+    return data_frame[data_frame['restaurant_id']== listOfFilters['restaurant_id']].to_json(orient='records')
+
+
 def remove_restaurant(restaurant_id):
     global data_frame
     data_frame = data_frame[data_frame['restaurant_id'] != restaurant_id]
-    return 'Restaurant removed'
+    return {"message": 'Restaurant removed'}

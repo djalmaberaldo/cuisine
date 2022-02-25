@@ -27,7 +27,7 @@ export class RestaurantService {
    * @returns 
    */
   delete(id: number): Observable<any> {
-    return this.http.delete(this.resourceUrl + "/delete/" + id);
+    return this.http.delete<any>(this.resourceUrl + "/delete/" + id);
   }
 
   /**

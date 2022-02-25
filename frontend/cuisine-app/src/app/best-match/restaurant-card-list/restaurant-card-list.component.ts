@@ -15,6 +15,6 @@ export class RestaurantCardListComponent {
 
   deleteRestaurant(id: any) {
     this.restaurantService.delete(id).subscribe(
-      () => console.log("Restaurant removed"));
+      () => alert("Restaurant removed"));
   }
 }
