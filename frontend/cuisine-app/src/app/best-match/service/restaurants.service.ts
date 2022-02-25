@@ -6,7 +6,7 @@ import { Restaurant } from './restaurant.model';
 
 @Injectable({ providedIn: 'root' })
 export class RestaurantService {
-  public resourceUrl = SERVER_API_URL + '/resource/search';
+  public resourceUrl = SERVER_API_URL + '/resource';
 
   constructor(protected http: HttpClient) {}
 
@@ -18,7 +18,16 @@ export class RestaurantService {
    */
   query(filters?: any): Observable<Restaurant[]> {
     return this.http
-      .get<Restaurant[]>(this.resourceUrl, {params: filters});
+      .get<Restaurant[]>(this.resourceUrl+"/search", {params: filters});
+  }
+
+  /**
+   * 
+   * @param id 
+   * @returns 
+   */
+  delete(id: number): Observable<any> {
+    return this.http.delete(this.resourceUrl + "/delete/" + id);
   }
 
 }

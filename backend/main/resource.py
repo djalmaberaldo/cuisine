@@ -2,6 +2,7 @@
 File where the endpoint is located along with its validation method
 """
 
+from cmath import log
 import json
 import logging
 from . import service
@@ -59,8 +60,8 @@ def add():
     return results, 200
 
 
-@bp.route("/delete", endpoint='delete', methods=['DELETE'])
-def delete():
+@bp.route("/delete/<restaurant_id>", endpoint='delete', methods=['DELETE'])
+def delete(restaurant_id):
     """
     Does the search by calling the search_all method
 
@@ -68,9 +69,7 @@ def delete():
         A jsonified list of restaurants with 200 status code
     """
 
-    res = request.json['restaurant_id']
-
-    results = service.remove_restaurant(res)
+    results = service.remove_restaurant(restaurant_id)
     return results, 200
 
 

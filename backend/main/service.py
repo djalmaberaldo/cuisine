@@ -116,7 +116,6 @@ def add_restaurant(listOfFilters):
 
 
 def remove_restaurant(restaurant_id):
-    logging.info(restaurant_id)
     global data_frame
     data_frame = data_frame[data_frame['restaurant_id'] != restaurant_id]
     return 'Restaurant removed'
