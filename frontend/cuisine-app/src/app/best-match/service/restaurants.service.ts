@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { SERVER_API_URL } from 'src/app/app.constants';
-import { Restaurant } from './restaurant.model';
+import { Cuisine, Restaurant } from './restaurant.model';
 
 @Injectable({ providedIn: 'root' })
 export class RestaurantService {
@@ -36,7 +36,16 @@ export class RestaurantService {
    * @returns 
    */
   post(restaurant: Restaurant ): Observable<Restaurant> {
-    return this.http.post<Restaurant>(this.resourceUrl + "/add/", restaurant);
+    return this.http.post<Restaurant>(this.resourceUrl + "/add", restaurant);
+  }
+
+  /**
+   * 
+   * @returns 
+   */
+  getCuisines(): Observable<Cuisine[]> {
+    return this.http
+      .get<Cuisine[]>(this.resourceUrl+"/cuisines");
   }
 
 }

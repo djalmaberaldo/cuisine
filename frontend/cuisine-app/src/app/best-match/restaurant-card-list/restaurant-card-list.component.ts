@@ -13,7 +13,7 @@ export class RestaurantCardListComponent {
 
   constructor(private restaurantService:RestaurantService) { }
 
-  deleteRestaurant(id: number) {
+  deleteRestaurant(id: any) {
     this.restaurantService.delete(id).subscribe(
       () => console.log("Restaurant removed"));
   }

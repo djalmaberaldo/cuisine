@@ -2,6 +2,7 @@
 Module to search the data and filter by the list passed on the get request
 """
 
+import json
 import logging
 import os
 from flask import Blueprint
@@ -12,6 +13,7 @@ bp = Blueprint('controller', __name__)
 logging.basicConfig(level=logging.INFO)
 package_dir = os.path.dirname(os.path.realpath(__file__+'../'))
 file_to_search_restaurants =  os.path.join(package_dir,'../restaurants.csv')
+file_to_search_cuisines =  os.path.join(package_dir,'../cuisines.csv')
 
 
 def build_dataframe():
@@ -21,8 +23,6 @@ def build_dataframe():
     Returns:
         The merged dataframe
     """
-
-    file_to_search_cuisines =  os.path.join(package_dir,'../cuisines.csv')
 
     restaurantes_df = pd.read_csv(file_to_search_restaurants, index_col=False, sep=";")
     cuisines_df = pd.read_csv(file_to_search_cuisines, index_col=False, sep=",")
@@ -61,6 +61,20 @@ def search_all(list_of_filters):
     logging.info('Sorting datagframe ...')
     search = sort_dataframe(search)
     return search.to_json(orient = 'records')
+
+
+def get_cuisines():
+    """
+    Search the restaurants based on the filters sent
+
+    Args:
+        list_of_filters (dict, optional): The list of filters Defaults to {}.
+
+    Returns:
+       The result dataframe converted to JSON
+    """
+    return pd.read_csv(file_to_search_cuisines, index_col=False, sep=",").to_json(orient = 'records')
+
 
 
 def apply_filters(data_frame, list_of_filters):
@@ -112,7 +126,7 @@ def add_restaurant(listOfFilters):
     global data_frame
     listOfFilters['restaurant_id'] = data_frame['restaurant_id'].iloc[-1]
     data_frame = data_frame.append(listOfFilters, ignore_index= True)
-    return 'Restaurant added'
+    return data_frame[data_frame['restaurant_id']== listOfFilters['restaurant_id']].to_json(orient='records')
 
 
 def remove_restaurant(restaurant_id):

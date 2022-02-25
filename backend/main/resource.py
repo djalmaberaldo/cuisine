@@ -39,6 +39,20 @@ def search():
     return jsonify(results), 200
 
 
+@bp.route("/cuisines", endpoint='cuisines', methods=['GET'])
+def cuisines():
+    """
+    Does the search by calling the search_all method
+
+    Returns:
+        A jsonified list of restaurants with 200 status code
+
+    """
+
+    results = json.loads(service.get_cuisines())
+    return jsonify(results), 200
+
+
 @bp.route("/add", endpoint='add', methods=['POST'])
 def add():
     """
@@ -56,8 +70,8 @@ def add():
 
     list_of_filters = request.json
 
-    results = service.add_restaurant(list_of_filters)
-    return results, 200
+    results = json.loads(service.add_restaurant(list_of_filters))
+    return jsonify(results), 200
 
 
 @bp.route("/delete/<restaurant_id>", endpoint='delete', methods=['DELETE'])

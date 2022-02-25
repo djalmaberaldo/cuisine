@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Cuisine } from '../service/restaurant.model';
 import { RestaurantService } from '../service/restaurants.service';
 
 @Component({
@@ -17,18 +19,17 @@ export class RestaurantFormComponent {
     customer_rating: new FormControl('', [Validators.max(5)]),
   });
 
-  constructor(private restaurantService:RestaurantService) { }
+  constructor(
+    private restaurantService:RestaurantService, 
+    private router: Router) { }
 
-  submit(){}
-
-  buildListOfFilters(): object {
-    const filters =  this.filterForm.getRawValue();
-    Object.keys(filters).forEach(key => {
-      if (!filters[key]) {
-        delete filters[key];
-      }
-    });
-
-    return filters;
+  submit() {
+    this.restaurantService.post(this.filterForm.value).subscribe(
+      () => {
+        console.log('Restaurant Added');
+        this.router.navigate(['']);
+      })
   }
+
+
 }
