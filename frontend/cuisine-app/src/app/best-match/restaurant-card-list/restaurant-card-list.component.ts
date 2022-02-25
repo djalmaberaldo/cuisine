@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
 import { Restaurant } from '../service/restaurant.model';
 import { RestaurantService } from '../service/restaurants.service';
 

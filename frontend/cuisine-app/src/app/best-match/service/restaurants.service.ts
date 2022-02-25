@@ -30,4 +30,13 @@ export class RestaurantService {
     return this.http.delete(this.resourceUrl + "/delete/" + id);
   }
 
+  /**
+   * 
+   * @param restaurant 
+   * @returns 
+   */
+  post(restaurant: Restaurant ): Observable<Restaurant> {
+    return this.http.post<Restaurant>(this.resourceUrl + "/add/", restaurant);
+  }
+
 }

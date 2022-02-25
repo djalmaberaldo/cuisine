@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Restaurant } from './../service/restaurant.model';
+import { Restaurant } from '../service/restaurant.model';
 import { RestaurantService } from '../service/restaurants.service';
 
 @Component({

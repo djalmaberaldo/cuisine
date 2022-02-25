@@ -5,5 +5,6 @@ export interface Restaurant {
   price?: number;
   customer_rating?: number;
   name_cuisine?: string;
+  cuisine_id?: number;
   name_restaurant?: string;
 }

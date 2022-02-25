@@ -36,7 +36,7 @@ def build_dataframe():
     )
 
     logging.info('Dropping columns..')
-    df = df.drop(columns=["id", "cuisine_id"])
+    df = df.drop(columns=["id"])
     return df
 
 
