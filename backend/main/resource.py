@@ -39,8 +39,8 @@ def search():
     return jsonify(results), 200
 
 
-@bp.route("/cuisines", endpoint='cuisines', methods=['GET'])
-def cuisines():
+@bp.route("/search/<id>", endpoint='get_restaurant', methods=['GET'])
+def get_restaurant():
     """
     Does the search by calling the search_all method
 
@@ -48,8 +48,16 @@ def cuisines():
         A jsonified list of restaurants with 200 status code
 
     """
+    logging.info('Validating parameters...')
+    for key,value in request.args.to_dict().items():
+        if key not in expect_keys:
+            return 'Invalid parameter ' + key, 400
+        if value in ('null', ''):
+            return 'Invalid value inside key ' + key, 400
 
-    results = json.loads(service.get_cuisines())
+    list_of_filters = request.args.to_dict()
+
+    results = json.loads(service.search_all(list_of_filters))
     return jsonify(results), 200
 
 

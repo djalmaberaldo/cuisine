@@ -41,11 +41,11 @@ export class RestaurantService {
 
   /**
    * 
+   * @param restaurant 
    * @returns 
    */
-  getCuisines(): Observable<Cuisine[]> {
-    return this.http
-      .get<Cuisine[]>(this.resourceUrl+"/cuisines");
+  update(restaurant: Restaurant ): Observable<Restaurant> {
+    return this.http.put<Restaurant>(this.resourceUrl + "/update", restaurant);
   }
 
 }
